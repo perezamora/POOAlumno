@@ -13,7 +13,6 @@ namespace POOAlumnos
 
         static void Main(string[] args)
         {
-            Alumno alumno = new Alumno();
             bool flagEnd = true;
 
             do
