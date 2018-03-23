@@ -57,7 +57,7 @@ namespace POOAlumnos
             var dni = Console.ReadLine();
             Alumno alumno = new Alumno(int.Parse(id), name, apellidos, dni);
 
-            using (StreamWriter writer = new StreamWriter("Alumnos.txt"))
+            using (StreamWriter writer = new StreamWriter("Alumnxºos.txt", append: true))
             {
                 writer.WriteLine(string.Format("{0};{1};{2};{3};", alumno.Dni, alumno.Name, alumno.Apellidos,alumno.Dni));
             }
