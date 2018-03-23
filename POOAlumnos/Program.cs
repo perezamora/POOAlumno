@@ -44,9 +44,10 @@ namespace POOAlumnos
             var keyPressed = Console.ReadLine();
             return int.Parse(keyPressed);
         }
-
+            
         public static void CrearAlumno()
         {
+            // Creamos las preguntas para los atributos del alumno
             Console.WriteLine("Entra id Alumno: \n");
             var id = Console.ReadLine();
             Console.WriteLine("Entra name Alumno: \n");
@@ -57,9 +58,11 @@ namespace POOAlumnos
             var dni = Console.ReadLine();
             Alumno alumno = new Alumno(int.Parse(id), name, apellidos, dni);
 
-            using (StreamWriter writer = new StreamWriter("Alumnxºos.txt", append: true))
+            // Creamos fichero para añadir los alumnos
+            using (FileStream fs = new FileStream("Alumnos.txt", FileMode.Append, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
             {
-                writer.WriteLine(string.Format("{0};{1};{2};{3};", alumno.Dni, alumno.Name, alumno.Apellidos,alumno.Dni));
+                sw.WriteLine(string.Format("{0};{1};{2};{3};", alumno.Id, alumno.Name, alumno.Apellidos, alumno.Dni));
             }
         }
     }
