@@ -35,7 +35,23 @@ namespace POOAlumnos
                 switch (key)
                 {
                     case OpcMenType.Create:
-                        CrearAlumnoTxt();
+                        Alumno alumno = CrearAlumno();  
+                        
+                        switch(getValorConfigKey("serializable"))
+                        {
+                            case OpcTypeFile.Txt:
+                                CrearAlumnoTxt(alumno);
+                                break;
+                            case OpcTypeFile.Json:
+                                CrearAlumnoJson(alumno);
+                                break;
+                            case OpcTypeFile.Xml:
+                                break;
+                            default:
+                                Console.WriteLine(" Ningun formato correcto ");
+                                break;
+                        }
+
                         break;
                     case OpcMenType.Exit:
                         flagEnd = false;
@@ -102,10 +118,8 @@ namespace POOAlumnos
             return new Alumno(int.Parse(id), name, apellidos, dni); ;
         }
 
-        public static void CrearAlumnoTxt()
+        public static void CrearAlumnoTxt(Alumno alumno)
         {
-
-            Alumno alumno = CrearAlumno();
 
             // Creamos fichero para añadir los alumnos en formato TXT
             // Si ya existe los agrega al final.
@@ -116,16 +130,50 @@ namespace POOAlumnos
                 sw.WriteLine(contenido);
             }
 
-            // Creamos fichero para añadir los alumnos en formato JSON
-            using (FileStream fs1 = new FileStream("Alumnos.json", FileMode.Create))
-            using (StreamWriter sw1 = new StreamWriter(fs1))
-            {
-                var outputJSON = JsonConvert.SerializeObject(alumno);
-                sw1.WriteLine(outputJSON);
-            }
-
         }
-        
+
+        // Crear alumno en formato JSON
+        public static void CrearAlumnoJson(Alumno alumno)
+        {
+            // Creamos fichero para añadir los alumnos en formato JSON
+            if (File.Exists("Alumnos.json"))
+            {
+                List<Alumno> alumnos = new List<Alumno>();
+                using (StreamReader r = new StreamReader("Alumnos.json"))
+                {
+                    // Recuperamos los alumnos del fichero JSON
+                    String json = r.ReadToEnd();
+                    var items = JsonConvert.DeserializeObject<List<Alumno>>(json);
+                    foreach (var item in items)
+                    {
+                        alumnos.Add(item);
+                    }
+
+                    // Añadimos el Alumno insertado por consola
+                    alumnos.Add(alumno);
+                }
+
+                using (FileStream fs1 = new FileStream("Alumnos.json", FileMode.Open))
+                using (StreamWriter sw1 = new StreamWriter(fs1))
+                {
+                    var outputJSON = JsonConvert.SerializeObject(alumnos, Formatting.Indented);
+                    sw1.WriteLine(outputJSON);
+                }
+            }
+            else
+            {
+                List<Alumno> alumnos = new List<Alumno>();
+                alumnos.Add(alumno);
+                using (FileStream fs1 = new FileStream("Alumnos.json", FileMode.Create))
+                using (StreamWriter sw1 = new StreamWriter(fs1))
+                {
+                    var outputJSON = JsonConvert.SerializeObject(alumnos, Formatting.Indented);
+                    sw1.WriteLine(outputJSON);
+                }
+            }
+        }
+
+
         // Obtenemos valor de la key configuracion
         public static OpcTypeFile getValorConfigKey(String keyConfig)
         {
