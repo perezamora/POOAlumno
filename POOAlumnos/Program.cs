@@ -121,12 +121,5 @@ namespace POOAlumnos
 
         }            
 
-        public static void CrearAlumnoJson()
-        {
-            Alumno alumno = CrearAlumno();
-            var outputJSON = JsonConvert.SerializeObject(alumno);
-            File.WriteAllText("MiPrimerJSON.json", outputJSON);
-
-        }
     }
 }
