@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.Xml.Serialization;
 
 namespace POOAlumnos
 {
@@ -46,6 +47,7 @@ namespace POOAlumnos
                                 CrearAlumnoJson(alumno);
                                 break;
                             case OpcTypeFile.Xml:
+                                CrearAlumnoXml(alumno);
                                 break;
                             default:
                                 Console.WriteLine(" Ningun formato correcto ");
@@ -173,6 +175,52 @@ namespace POOAlumnos
             }
         }
 
+        // Crear alumno en formato XML
+        public static void CrearAlumnoXml(Alumno alumno)
+        {
+            String pathXml = "Alumnos.xml";
+
+            try
+            {
+                if (File.Exists(pathXml))
+                {
+                    List<Alumno> alumnos = new List<Alumno>();
+                    XmlSerializer xSeriz = new XmlSerializer(typeof(List<Alumno>));
+                    using (StreamReader r = new StreamReader(pathXml))
+                    {                      
+                        String xml = r.ReadToEnd();
+                        StringReader stringReader = new StringReader(xml);
+                        alumnos = (List<Alumno>)xSeriz.Deserialize(stringReader);
+                        alumnos.Add(alumno);
+                    }
+
+                    using (FileStream fs1 = new FileStream(pathXml, FileMode.Open))
+                    xSeriz.Serialize(fs1, alumnos);
+
+                    /*
+                    using (FileStream fileStream = new FileStream("Alumnos.xml", FileMode.Open))
+                    {
+                        XmlSerializer xSeriz = new XmlSerializer(typeof(List<Alumno>));
+                        List<Alumno> alumnos = (List<Alumno>)xSeriz.Deserialize(fileStream);
+                        Console.WriteLine(alumnos);
+                        Console.WriteLine(alumnos);
+                    }*/
+
+                }
+                else
+                {
+                    List<Alumno> alumnos = new List<Alumno>();
+                    XmlSerializer xSeriz = new XmlSerializer(typeof(List<Alumno>));
+                    FileStream fs1 = new FileStream(pathXml, FileMode.Create);
+                    alumnos.Add(alumno);
+                    xSeriz.Serialize(fs1, alumnos);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         // Obtenemos valor de la key configuracion
         public static OpcTypeFile getValorConfigKey(String keyConfig)

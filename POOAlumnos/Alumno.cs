@@ -14,6 +14,11 @@ namespace POOAlumnos
         private String apellidos;
         private String dni;
 
+        public Alumno()
+        {
+
+        }
+
         public Alumno(int id, String name, String apellidos, String dni)
         {
             this.id = id;
@@ -31,7 +36,7 @@ namespace POOAlumnos
         public String Name
         {
             get { return name; }
-            set { Name = value; }
+            set { name = value; }
         }
 
         public String Apellidos
