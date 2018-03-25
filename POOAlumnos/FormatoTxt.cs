@@ -20,12 +20,24 @@ namespace POOAlumnos
             return 1;
         }
 
+        /*
         public override FileStream Crear(string path)
         {
+            /*
             using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
             {
                 return fs;
+            }****
+            try
+            {
+                FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write);
+                return fs;
             }
-        }
+            catch (Exception e)
+            {
+                throw (e.InnerException);
+            }
+
+        }*/
     }
 }

@@ -9,5 +9,7 @@ namespace POOAlumnos
     public abstract class TypeFactory
     {
         public abstract Formato CrearFormatoTxt();
+        public abstract Formato CrearFormatoJson();
+        public abstract Formato CrearFormatoXml();
     }
 }

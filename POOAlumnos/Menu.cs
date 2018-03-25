@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Newtonsoft.Json;
 using System.Configuration;
-using System.Xml.Serialization;
 
 namespace POOAlumnos
 {
@@ -37,20 +35,27 @@ namespace POOAlumnos
                 {
                     case OpcMenType.Create:
 
+                        // Por defecto creamos factoria de ficheros texto
+                        var result = 0;
                         TypeFactory factory = new FileFactory();
+                        Formato formato = factory.CrearFormatoTxt();
+
+                        // Creamos el alumno
                         Alumno alumno = CrearAlumno();
 
+                        // Tratar formato segun escogido por usuario
                         switch (getValorConfigKey("serializable"))
                         {
-                            case OpcTypeFile.Txt:
-                                Formato formato = factory.CrearFormatoTxt();
-                                formato.AddElement("Alumno.txt",alumno);
+                            case OpcTypeFile.Txt:                       
+                                result = formato.AddElement("Alumnos.txt",alumno);
                                 break;
                             case OpcTypeFile.Json:
-                                CrearAlumnoJson(alumno);
+                                formato = factory.CrearFormatoJson();
+                                result = formato.AddElement("Alumnos.json", alumno);
                                 break;
                             case OpcTypeFile.Xml:
-                                CrearAlumnoXml(alumno);
+                                formato = factory.CrearFormatoXml();
+                                result = formato.AddElement("Alumnos.xml", alumno);
                                 break;
                             default:
                                 Console.WriteLine(" Ningun formato correcto ");
@@ -75,6 +80,7 @@ namespace POOAlumnos
 
         }
 
+        // Solo mostrar sino salimos del proceso 
         public static void PasoContinuarProceso()
         {
             Console.WriteLine("\n Aprete tecla para continuar ...");
@@ -121,94 +127,6 @@ namespace POOAlumnos
             }
            
             return new Alumno(int.Parse(id), name, apellidos, dni); ;
-        }
-
-        // Crear alumno en formato JSON
-        public static void CrearAlumnoJson(Alumno alumno)
-        {
-            // Creamos fichero para añadir los alumnos en formato JSON
-            if (File.Exists("Alumnos.json"))
-            {
-                List<Alumno> alumnos = new List<Alumno>();
-                using (StreamReader r = new StreamReader("Alumnos.json"))
-                {
-                    // Recuperamos los alumnos del fichero JSON
-                    String json = r.ReadToEnd();
-                    var items = JsonConvert.DeserializeObject<List<Alumno>>(json);
-                    foreach (var item in items)
-                    {
-                        alumnos.Add(item);
-                    }
-
-                    // Añadimos el Alumno insertado por consola
-                    alumnos.Add(alumno);
-                }
-
-                using (FileStream fs1 = new FileStream("Alumnos.json", FileMode.Open))
-                using (StreamWriter sw1 = new StreamWriter(fs1))
-                {
-                    var outputJSON = JsonConvert.SerializeObject(alumnos, Formatting.Indented);
-                    sw1.WriteLine(outputJSON);
-                }
-            }
-            else
-            {
-                List<Alumno> alumnos = new List<Alumno>();
-                alumnos.Add(alumno);
-                using (FileStream fs1 = new FileStream("Alumnos.json", FileMode.Create))
-                using (StreamWriter sw1 = new StreamWriter(fs1))
-                {
-                    var outputJSON = JsonConvert.SerializeObject(alumnos, Formatting.Indented);
-                    sw1.WriteLine(outputJSON);
-                }
-            }
-        }
-
-        // Crear alumno en formato XML
-        public static void CrearAlumnoXml(Alumno alumno)
-        {
-            String pathXml = "Alumnos.xml";
-
-            try
-            {
-                if (File.Exists(pathXml))
-                {
-                    List<Alumno> alumnos = new List<Alumno>();
-                    XmlSerializer xSeriz = new XmlSerializer(typeof(List<Alumno>));
-                    using (StreamReader r = new StreamReader(pathXml))
-                    {                      
-                        String xml = r.ReadToEnd();
-                        StringReader stringReader = new StringReader(xml);
-                        alumnos = (List<Alumno>)xSeriz.Deserialize(stringReader);
-                        alumnos.Add(alumno);
-                    }
-
-                    using (FileStream fs1 = new FileStream(pathXml, FileMode.Open))
-                    xSeriz.Serialize(fs1, alumnos);
-
-                    /*
-                    using (FileStream fileStream = new FileStream("Alumnos.xml", FileMode.Open))
-                    {
-                        XmlSerializer xSeriz = new XmlSerializer(typeof(List<Alumno>));
-                        List<Alumno> alumnos = (List<Alumno>)xSeriz.Deserialize(fileStream);
-                        Console.WriteLine(alumnos);
-                        Console.WriteLine(alumnos);
-                    }*/
-
-                }
-                else
-                {
-                    List<Alumno> alumnos = new List<Alumno>();
-                    XmlSerializer xSeriz = new XmlSerializer(typeof(List<Alumno>));
-                    FileStream fs1 = new FileStream(pathXml, FileMode.Create);
-                    alumnos.Add(alumno);
-                    xSeriz.Serialize(fs1, alumnos);
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
         // Obtenemos valor de la key configuracion
