@@ -36,12 +36,15 @@ namespace POOAlumnos
                 switch (key)
                 {
                     case OpcMenType.Create:
-                        Alumno alumno = CrearAlumno();  
-                        
-                        switch(getValorConfigKey("serializable"))
+
+                        TypeFactory factory = new FileFactory();
+                        Alumno alumno = CrearAlumno();
+
+                        switch (getValorConfigKey("serializable"))
                         {
                             case OpcTypeFile.Txt:
-                                CrearAlumnoTxt(alumno);
+                                Formato formato = factory.CrearFormatoTxt();
+                                formato.AddElement("Alumno.txt",alumno);
                                 break;
                             case OpcTypeFile.Json:
                                 CrearAlumnoJson(alumno);
@@ -118,20 +121,6 @@ namespace POOAlumnos
             }
            
             return new Alumno(int.Parse(id), name, apellidos, dni); ;
-        }
-
-        public static void CrearAlumnoTxt(Alumno alumno)
-        {
-
-            // Creamos fichero para añadir los alumnos en formato TXT
-            // Si ya existe los agrega al final.
-            using (FileStream fs = new FileStream("Alumnos.txt", FileMode.Append, FileAccess.Write))
-            using (StreamWriter sw = new StreamWriter(fs))
-            {
-                var contenido = string.Format("{0};{1};{2};{3};", alumno.Id, alumno.Name, alumno.Apellidos, alumno.Dni);
-                sw.WriteLine(contenido);
-            }
-
         }
 
         // Crear alumno en formato JSON

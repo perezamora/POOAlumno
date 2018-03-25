@@ -50,5 +50,25 @@ namespace POOAlumnos
             get { return dni; }
             set { dni = value; }
         }
+
+        public override bool Equals(object obj)
+        {
+            var alumno = obj as Alumno;
+            return alumno != null &&
+                   id == alumno.id &&
+                   name == alumno.name &&
+                   apellidos == alumno.apellidos &&
+                   dni == alumno.dni;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -818402288;
+            hashCode = hashCode * -1521134295 + id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(apellidos);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(dni);
+            return hashCode;
+        }
     }
 }
