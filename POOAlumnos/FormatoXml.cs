@@ -10,7 +10,7 @@ namespace POOAlumnos
 {
     public class FormatoXml : Formato
     {
-        public override int AddElement(String path, Alumno alumno)
+        public override void AddElement(String path, Alumno alumno)
         {
             try
             {
@@ -42,7 +42,6 @@ namespace POOAlumnos
             {
                 throw ex;
             }
-            return 1;
         }
     }
 }

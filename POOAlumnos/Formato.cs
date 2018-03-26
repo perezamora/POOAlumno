@@ -9,8 +9,6 @@ namespace POOAlumnos
 {
     public abstract class Formato
     {
-        //public abstract FileStream Crear(String path);
-        //public abstract int AddElement(String path, Alumno alumno, FileStream fs);
-        public abstract int AddElement(String path, Alumno alumno);
+        public abstract void AddElement(String path, Alumno alumno);
     }
 }

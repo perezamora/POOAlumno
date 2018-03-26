@@ -29,9 +29,7 @@ namespace POOAlumnos.Tests
             alumno.Dni = "11111A";
 
             // Realizamos la llamada metodo para añadir elemento
-            var result = formato.AddElement(path, alumno);
-
-            Assert.IsTrue(result == 1);
+            formato.AddElement(path, alumno);
 
             // Validar si el insert se ha realizado correctamente
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))

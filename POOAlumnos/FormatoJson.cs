@@ -10,7 +10,7 @@ namespace POOAlumnos
 {
     public class FormatoJson : Formato
     {
-        public override int AddElement(string path, Alumno alumno)
+        public override void AddElement(string path, Alumno alumno)
         {
             // Creamos fichero para añadir los alumnos en formato JSON
             if (File.Exists(path))
@@ -49,7 +49,6 @@ namespace POOAlumnos
                 }
             }
 
-            return 1;
         }
 
     }

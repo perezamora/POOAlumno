@@ -12,7 +12,10 @@ namespace POOAlumnos
 {
     class Menu
     {
-        static void Main(string[] args)
+
+        public Menu() { }
+
+        public void IniApp()
         {
             bool flagEnd = true;
 
@@ -24,7 +27,6 @@ namespace POOAlumnos
                     case OpcMenType.Create:
 
                         // Por defecto creamos factoria de ficheros texto
-                        var result = 0;
                         TypeFactory factory = new FileFactory();
                         Formato formato = factory.CrearFormatoTxt();
 
@@ -35,15 +37,15 @@ namespace POOAlumnos
                         switch (getValorConfigKey("serializable"))
                         {
                             case OpcTypeFile.Txt:                       
-                                result = formato.AddElement("Alumnos.txt",alumno);
+                                formato.AddElement("Alumnos.txt",alumno);
                                 break;
                             case OpcTypeFile.Json:
                                 formato = factory.CrearFormatoJson();
-                                result = formato.AddElement("Alumnos.json", alumno);
+                                formato.AddElement("Alumnos.json", alumno);
                                 break;
                             case OpcTypeFile.Xml:
                                 formato = factory.CrearFormatoXml();
-                                result = formato.AddElement("Alumnos.xml", alumno);
+                                formato.AddElement("Alumnos.xml", alumno);
                                 break;
                             default:
                                 Console.WriteLine(" Ningun formato correcto ");
@@ -69,7 +71,7 @@ namespace POOAlumnos
         }
 
         // Solo mostrar sino salimos del proceso 
-        public static void PasoContinuarProceso()
+        public void PasoContinuarProceso()
         {
             Console.WriteLine("\n Aprete tecla para continuar ...");
             var salir = Console.ReadKey();
@@ -77,11 +79,12 @@ namespace POOAlumnos
         }
 
         // Mostrar opciones menu principal
-        public static OpcMenType MostrarMenu()
+        public OpcMenType MostrarMenu()
         {
-            Console.WriteLine("Elige Opcion:");
+            Console.WriteLine("Menu aplicacion: ");
             Console.WriteLine(" 1- Crear alumno ");
             Console.WriteLine(" 0- Salir aplicacion");
+            Console.Write("Elige Opcion:");
             var keyPressed = Console.ReadLine();
             return keyPressed != "" ? (OpcMenType)int.Parse(keyPressed) : OpcMenType.Cont;
         }
@@ -91,18 +94,18 @@ namespace POOAlumnos
         //  1.- txt
         //  2.- JSON
         //  3.- XML
-        public static Alumno CrearAlumno()
+        public Alumno CrearAlumno()
         {
             // Creamos las preguntas para los atributos del alumno
             Console.Clear();
             Console.WriteLine("Entra datos del Alumno: ");
-            Console.WriteLine("Entra id:");
+            Console.Write("Entra id: ");
             var id = Console.ReadLine();
-            Console.WriteLine("Entra name:");
+            Console.Write("Entra name: ");
             var name = Console.ReadLine();
-            Console.WriteLine("Entra apellidos:");
+            Console.Write("Entra apellidos: ");
             var apellidos = Console.ReadLine();
-            Console.WriteLine("Entra dni:");
+            Console.Write("Entra dni: ");
             var dni = Console.ReadLine();
             Console.WriteLine("Formato por defecto Alumno : "+ getValorConfigKey("serializable"));
             Console.WriteLine("Escoja opcion formato salida (Texto = 1, JSON = 2, XML = 3) o continue con la de defecto");
