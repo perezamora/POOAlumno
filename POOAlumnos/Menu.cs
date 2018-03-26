@@ -4,26 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using static POOAlumnos.Utilities.ConfigUtilities;
 using System.Configuration;
+using static POOAlumnos.EnumApp.EnumApp;
 
 namespace POOAlumnos
 {
     class Menu
     {
-        public enum OpcMenType
-        {
-            Exit = 0,
-            Create = 1,
-            Cont = 2
-        };
-
-        public enum OpcTypeFile
-        {
-            Txt = 1,
-            Json = 2,
-            Xml = 3
-        }
-
         static void Main(string[] args)
         {
             bool flagEnd = true;
@@ -116,7 +104,7 @@ namespace POOAlumnos
             var apellidos = Console.ReadLine();
             Console.WriteLine("Entra dni:");
             var dni = Console.ReadLine();
-            Console.WriteLine("Formato por defecto Alumno : "+ ConfigurationManager.AppSettings["serializable"]);
+            Console.WriteLine("Formato por defecto Alumno : "+ getValorConfigKey("serializable"));
             Console.WriteLine("Escoja opcion formato salida (Texto = 1, JSON = 2, XML = 3) o continue con la de defecto");
 
             // Objecto console key
@@ -129,20 +117,5 @@ namespace POOAlumnos
             return new Alumno(int.Parse(id), name, apellidos, dni); ;
         }
 
-        // Obtenemos valor de la key configuracion
-        public static OpcTypeFile getValorConfigKey(String keyConfig)
-        {
-            var opcSerial = ConfigurationManager.AppSettings[keyConfig];
-            return (OpcTypeFile)Enum.Parse(typeof(OpcTypeFile), opcSerial, true);
-        }
-
-        // Guardamos valor de la key en archivo configuracion "nombre.exe.config"
-        public static void setValorConfigKey(String key, String value)
-        {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings[key].Value = value;
-            config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
-        }
     }
 }

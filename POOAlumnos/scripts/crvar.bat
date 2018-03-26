@@ -1,0 +1,1 @@
+SETX Formato "Txt"
