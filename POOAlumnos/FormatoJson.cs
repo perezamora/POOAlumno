@@ -20,10 +20,13 @@ namespace POOAlumnos
                 {
                     // Recuperamos los alumnos del fichero JSON
                     String json = r.ReadToEnd();
-                    var items = JsonConvert.DeserializeObject<List<Alumno>>(json);
-                    foreach (var item in items)
+                    if (json != "")
                     {
-                        alumnos.Add(item);
+                        var items = JsonConvert.DeserializeObject<List<Alumno>>(json);
+                        foreach (var item in items)
+                        {
+                            alumnos.Add(item);
+                        }
                     }
 
                     // Añadimos el Alumno insertado por consola
