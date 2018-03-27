@@ -48,7 +48,7 @@ namespace POOAlumnos
                                 formato.AddElement("Alumnos.xml", alumno);
                                 break;
                             default:
-                                Console.WriteLine(" Ningun formato correcto ");
+                                Console.WriteLine(Properties.Resources.NingunFormato);
                                 break;
                         }
 
@@ -58,7 +58,7 @@ namespace POOAlumnos
                         break;
                     case OpcMenType.Cont:
                     default:
-                        Console.WriteLine("Opcion no valida .... escoja otra por favor \n");
+                        Console.WriteLine(Properties.Resources.OpcionNoValida);
                         break;
                 }
 
@@ -73,7 +73,7 @@ namespace POOAlumnos
         // Solo mostrar sino salimos del proceso 
         public void PasoContinuarProceso()
         {
-            Console.WriteLine("\n Aprete tecla para continuar ...");
+            Console.WriteLine("\n "+ Properties.Resources.ContProceso);
             var salir = Console.ReadKey();
             Console.Clear();
         }
@@ -81,10 +81,10 @@ namespace POOAlumnos
         // Mostrar opciones menu principal
         public OpcMenType MostrarMenu()
         {
-            Console.WriteLine("Menu aplicacion: ");
-            Console.WriteLine(" 1- Crear alumno ");
-            Console.WriteLine(" 0- Salir aplicacion");
-            Console.Write("Elige Opcion:");
+            Console.WriteLine(Properties.Resources.Litmenu);
+            Console.WriteLine(Properties.Resources.alumnoapp);
+            Console.WriteLine(Properties.Resources.salirapp);
+            Console.Write(Properties.Resources.elegiropcion);
             var keyPressed = Console.ReadLine();
             return keyPressed != "" ? (OpcMenType)int.Parse(keyPressed) : OpcMenType.Cont;
         }
@@ -98,17 +98,17 @@ namespace POOAlumnos
         {
             // Creamos las preguntas para los atributos del alumno
             Console.Clear();
-            Console.WriteLine("Entra datos del Alumno: ");
-            Console.Write("Entra id: ");
+            Console.WriteLine(Properties.Resources.formdatos);
+            Console.Write(Properties.Resources.formId);
             var id = Console.ReadLine();
-            Console.Write("Entra name: ");
+            Console.Write(Properties.Resources.formName);
             var name = Console.ReadLine();
-            Console.Write("Entra apellidos: ");
+            Console.Write(Properties.Resources.formApellidos);
             var apellidos = Console.ReadLine();
-            Console.Write("Entra dni: ");
+            Console.Write(Properties.Resources.formDni);
             var dni = Console.ReadLine();
-            Console.WriteLine("Formato por defecto Alumno : "+ getValorConfigKey("serializable"));
-            Console.WriteLine("Escoja opcion formato salida (Texto = 1, JSON = 2, XML = 3) o continue con la de defecto");
+            Console.WriteLine(Properties.Resources.formdatosdefecto + getValorConfigKey("serializable"));
+            Console.WriteLine(Properties.Resources.formdatosparse);
 
             // Objecto console key
             var cki = Console.ReadLine();
