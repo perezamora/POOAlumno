@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace POOAlumnos
 {
+
     public class Alumno
     {
 
@@ -13,10 +14,10 @@ namespace POOAlumnos
         private String name;
         private String apellidos;
         private String dni;
+        private String guid;
 
         public Alumno()
         {
-
         }
 
         public Alumno(int id, String name, String apellidos, String dni)
@@ -25,6 +26,16 @@ namespace POOAlumnos
             this.name = name;
             this.apellidos = apellidos;
             this.dni = dni;
+            this.guid = System.Guid.NewGuid().ToString();
+        }
+
+        public Alumno(int id, String name, String apellidos, String dni, String guid)
+        {
+            this.id = id;
+            this.name = name;
+            this.apellidos = apellidos;
+            this.dni = dni;
+            this.guid = guid;
         }
 
         public int Id //Propiedad
@@ -51,23 +62,32 @@ namespace POOAlumnos
             set { dni = value; }
         }
 
+        public String Guid
+        {
+            get { return guid; }
+            set { guid = value; }
+        }
+
         public override bool Equals(object obj)
         {
+
             var alumno = obj as Alumno;
             return alumno != null &&
                    id == alumno.id &&
                    name == alumno.name &&
                    apellidos == alumno.apellidos &&
-                   dni == alumno.dni;
+                   dni == alumno.dni &&
+                   guid == alumno.guid;
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -818402288;
+            var hashCode = -192160356;
             hashCode = hashCode * -1521134295 + id.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(apellidos);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(dni);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(guid);
             return hashCode;
         }
     }

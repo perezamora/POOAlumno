@@ -30,9 +30,16 @@ namespace POOAlumnos.Tests
         [DataTestMethod]
         public void AddElementTest(string path, int id, string name, string apellidos, string dni)
         {
-            // Creamos usuario de pruebas
-            Alumno alumno = new Alumno(id, name, apellidos, dni);
+            string guid = System.Guid.NewGuid().ToString();
 
+            // Creamos usuario de pruebas
+            Alumno alumno = new Alumno(id, name, apellidos, dni, guid);
+
+            Console.WriteLine(alumno.Id);
+            Console.WriteLine(alumno.Name);
+            Console.WriteLine(alumno.Apellidos);
+            Console.WriteLine(alumno.Dni);
+            Console.WriteLine(alumno.Guid);
             // Realizamos la llamada metodo para añadir elemento
             formatoTxt.AddElement(path, alumno);
 
@@ -40,6 +47,7 @@ namespace POOAlumnos.Tests
             Alumno alumnoAux = LeerAlumnoTxt(path);
 
             // Comaparamos el alumno insertado con el que hemos recuperado
+            Console.WriteLine(alumno.Equals(alumnoAux));
             Assert.IsTrue(alumno.Equals(alumnoAux));
         }
 
@@ -47,8 +55,11 @@ namespace POOAlumnos.Tests
         [DataTestMethod]
         public void AddElementTestJson(string path, int id, string name, string apellidos, string dni)
         {
+
+            string guid = System.Guid.NewGuid().ToString();
+
             // Creamos usuario de pruebas
-            Alumno alumno = new Alumno(id, name, apellidos, dni);
+            Alumno alumno = new Alumno(id, name, apellidos, dni, guid);
 
             // Realizamos la llamada metodo para añadir elemento
             formatoJson.AddElement(path, alumno);
@@ -69,11 +80,12 @@ namespace POOAlumnos.Tests
                 // Recuperamos los alumnos del fichero JSON
                 String text = sw.ReadToEnd();
                 string[] fields = text.Split(';');
-                Alumno alumnoAux = new Alumno();
-                alumnoAux.Id = int.Parse(fields[0]);
-                alumnoAux.Name = fields[1];
-                alumnoAux.Apellidos = fields[2];
-                alumnoAux.Dni = fields[3];
+                Alumno alumnoAux = new Alumno(int.Parse(fields[0]), fields[1], fields[2], fields[3], fields[4].Trim());
+                Console.WriteLine(alumnoAux.Id);
+                Console.WriteLine(alumnoAux.Name);
+                Console.WriteLine(alumnoAux.Apellidos);
+                Console.WriteLine(alumnoAux.Dni);
+                Console.WriteLine(alumnoAux.Guid);
                 return alumnoAux;
             }
         }
@@ -97,8 +109,8 @@ namespace POOAlumnos.Tests
         [TestCleanup]
         public void testClean()
         {
-            File.Delete("AlumnosTest.txt");
-            File.Delete("AlumnosTest.json");
+            //File.Delete("AlumnosTest.txt");
+            //File.Delete("AlumnosTest.json");
         }
     }
 }

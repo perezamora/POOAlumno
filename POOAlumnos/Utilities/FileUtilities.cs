@@ -50,7 +50,7 @@ namespace POOAlumnos.Utilities
         {
             using (StreamWriter sw = new StreamWriter(fs))
             {
-                var contenido = string.Format("{0};{1};{2};{3};", alumno.Id, alumno.Name, alumno.Apellidos, alumno.Dni);
+                var contenido = string.Format("{0};{1};{2};{3};{4}", alumno.Id, alumno.Name, alumno.Apellidos, alumno.Dni, alumno.Guid);
                 sw.WriteLine(contenido);
             }
         }
