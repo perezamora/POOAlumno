@@ -37,21 +37,24 @@ namespace POOAlumnos
                         switch (getValorConfigKey("serializable"))
                         {
                             case OpcTypeFile.Txt:                       
-                                formato.AddElement("Alumnos.txt",alumno);
+                                formato.Add(alumno);
                                 break;
                             case OpcTypeFile.Json:
                                 formato = factory.CrearFormatoJson();
-                                formato.AddElement("Alumnos.json", alumno);
+                                formato.Add(alumno);
                                 break;
                             case OpcTypeFile.Xml:
                                 formato = factory.CrearFormatoXml();
-                                formato.AddElement("Alumnos.xml", alumno);
+                                formato.Add( alumno);
                                 break;
                             default:
                                 Console.WriteLine(Properties.Resources.NingunFormato);
                                 break;
                         }
 
+                        break;
+                    case OpcMenType.Config:
+                        MenuConfig();
                         break;
                     case OpcMenType.Exit:
                         flagEnd = false;
@@ -82,11 +85,26 @@ namespace POOAlumnos
         public OpcMenType MostrarMenu()
         {
             Console.WriteLine(Properties.Resources.Litmenu);
-            Console.WriteLine(Properties.Resources.alumnoapp);
-            Console.WriteLine(Properties.Resources.salirapp);
+            Console.WriteLine(Properties.Resources.menuAlum);
+            Console.WriteLine(Properties.Resources.menuConfig);
+            Console.WriteLine(Properties.Resources.menuSalir);
             Console.Write(Properties.Resources.elegiropcion);
             var keyPressed = Console.ReadLine();
             return keyPressed != "" ? (OpcMenType)int.Parse(keyPressed) : OpcMenType.Cont;
+        }
+
+        // Menu configuracion tipo formato 
+        public void MenuConfig()
+        {
+            Console.WriteLine(Properties.Resources.formdatosdefecto + getValorConfigKey("serializable"));
+            Console.WriteLine(Properties.Resources.formdatosparse);
+
+            // Objecto console key
+            var cki = Console.ReadLine();
+            if (cki != "")
+            {
+                setValorConfigKey("serializable", Enum.GetName(typeof(OpcTypeFile), int.Parse(cki)));
+            }
         }
 
         // Creamos objeto alumno para añadir al fichero
@@ -107,15 +125,6 @@ namespace POOAlumnos
             var apellidos = Console.ReadLine();
             Console.Write(Properties.Resources.formDni);
             var dni = Console.ReadLine();
-            Console.WriteLine(Properties.Resources.formdatosdefecto + getValorConfigKey("serializable"));
-            Console.WriteLine(Properties.Resources.formdatosparse);
-
-            // Objecto console key
-            var cki = Console.ReadLine();
-            if (cki != "")
-            {
-                setValorConfigKey("serializable",Enum.GetName(typeof(OpcTypeFile), int.Parse(cki)));
-            }
            
             return new Alumno(int.Parse(id), name, apellidos, dni); ;
         }

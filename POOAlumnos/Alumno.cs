@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace POOAlumnos
 {
@@ -66,6 +67,24 @@ namespace POOAlumnos
         {
             get { return guid; }
             set { guid = value; }
+        }
+
+        public override String ToString()
+        {
+            return string.Format("{0};{1};{2};{3};{4};", this.id, this.name, this.apellidos, this.dni, this.guid);
+        }
+
+        public String ToJson()
+        {
+            Alumno alumn = new Alumno
+            {
+                Id = this.id,
+                Name = this.name,
+                Apellidos = this.apellidos,
+                Dni = this.dni,
+                Guid = this.guid
+            };
+            return JsonConvert.SerializeObject(alumn, Formatting.Indented);
         }
 
         public override bool Equals(object obj)

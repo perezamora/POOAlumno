@@ -12,7 +12,8 @@ namespace POOAlumnos.EnumApp
         {
             Exit = 0,
             Create = 1,
-            Cont = 2
+            Config = 2,
+            Cont = 3
         };
 
         public enum OpcTypeFile

@@ -11,14 +11,16 @@ namespace POOAlumnos.Utilities
     public static class ConfigUtilities
     {
 
-        static ConfigUtilities()
+         static ConfigUtilities()
         {
             // Si no tenemos variables en el archivo APP.config la leemos por variables entorno
+            /*
             var EnvFormato = Environment.GetEnvironmentVariable("Formato");
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings["Serializable"].Value = EnvFormato;
+            Console.WriteLine(EnvFormato);
+            config.AppSettings.Settings["serializable"].Value = EnvFormato;
             config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
+            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);*/
         }
 
         // Obtenemos valor de la key configuracion
@@ -26,6 +28,11 @@ namespace POOAlumnos.Utilities
         {
             var opcSerial = ConfigurationManager.AppSettings[keyConfig];
             return (OpcTypeFile)Enum.Parse(typeof(OpcTypeFile), opcSerial, true);
+        }
+
+        public static String getValorConfig(String keyConfig)
+        {
+            return ConfigurationManager.AppSettings[keyConfig];
         }
 
         // Guardamos valor de la key en archivo configuracion "nombre.exe.config"

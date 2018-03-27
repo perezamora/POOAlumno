@@ -61,15 +61,6 @@ namespace POOAlumnos.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a 1- Crear alumno.
-        /// </summary>
-        internal static string alumnoapp {
-            get {
-                return ResourceManager.GetString("alumnoapp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Aprete tecla para continuar ....
         /// </summary>
         internal static string ContProceso {
@@ -160,6 +151,33 @@ namespace POOAlumnos.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a 1- Crear alumno.
+        /// </summary>
+        internal static string menuAlum {
+            get {
+                return ResourceManager.GetString("menuAlum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a 2- Configuracion.
+        /// </summary>
+        internal static string menuConfig {
+            get {
+                return ResourceManager.GetString("menuConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a 0- Salir aplicacion.
+        /// </summary>
+        internal static string menuSalir {
+            get {
+                return ResourceManager.GetString("menuSalir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ningun formato correcto.
         /// </summary>
         internal static string NingunFormato {
@@ -178,11 +196,11 @@ namespace POOAlumnos.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a 0- Salir aplicacion.
+        ///   Busca una cadena traducida similar a Serializable.
         /// </summary>
-        internal static string salirapp {
+        internal static string Serializable {
             get {
-                return ResourceManager.GetString("salirapp", resourceCulture);
+                return ResourceManager.GetString("Serializable", resourceCulture);
             }
         }
     }

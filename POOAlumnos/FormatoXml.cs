@@ -5,29 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
+using System.Xml;
 
 namespace POOAlumnos
 {
     public class FormatoXml : Formato
     {
-        public override void AddElement(String path, Alumno alumno)
+        public override void Add(Alumno alumno)
         {
+            var path = "alumnos.xml";
             try
             {
                 if (File.Exists(path))
                 {
-                    List<Alumno> alumnos = new List<Alumno>();
-                    XmlSerializer xSeriz = new XmlSerializer(typeof(List<Alumno>));
-                    using (StreamReader r = new StreamReader(path))
-                    {
-                        String xml = r.ReadToEnd();
-                        StringReader stringReader = new StringReader(xml);
-                        alumnos = (List<Alumno>)xSeriz.Deserialize(stringReader);
-                        alumnos.Add(alumno);
-                    }
+                    /*
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(path);
+                    XmlNode root = doc.SelectSingleNode("ArrayOfAlumno");
 
-                    using (FileStream fs1 = new FileStream(path, FileMode.Open))
-                        xSeriz.Serialize(fs1, alumnos);
+                    XmlElement newElement = doc.CreateElement("Alumno");
+                    StringWriter sw = new StringWriter();
+                    XmlSerializer xSeriz = new XmlSerializer(typeof(Alumno));
+                    xSeriz.Serialize(sw, alumno);
+                    root.AppendChild(newElement);
+                    doc.Save(path);
+
+                    /*
+                    XmlSerializer ser = new XmlSerializer(typeof(XmlNode));
+                    XmlNode myNode = new XmlDocument().CreateNode(XmlNodeType.Element, "Alumno", "ns");
+                    myNode.InnerText = "Hello Node";
+                    FileStream fs1 = new FileStream(path, FileMode.Append);
+                    ser.Serialize(fs1, myNode);*/
                 }
                 else
                 {
@@ -35,7 +43,8 @@ namespace POOAlumnos
                     XmlSerializer xSeriz = new XmlSerializer(typeof(List<Alumno>));
                     FileStream fs1 = new FileStream(path, FileMode.Create);
                     alumnos.Add(alumno);
-                    xSeriz.Serialize(fs1, alumnos);
+                    xSeriz.Serialize(fs1, alumno);
+                    fs1.Close();
                 }
             }
             catch (Exception ex)

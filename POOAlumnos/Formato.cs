@@ -9,6 +9,6 @@ namespace POOAlumnos
 {
     public abstract class Formato
     {
-        public abstract void AddElement(String path, Alumno alumno);
+        public abstract void Add(Alumno alumno);
     }
 }

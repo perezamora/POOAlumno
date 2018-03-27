@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="alumnoapp" xml:space="preserve">
+  <data name="menuAlum" xml:space="preserve">
     <value>1- Crear alumno</value>
     <comment>Literal crear alumno</comment>
   </data>
@@ -162,8 +162,16 @@
     <value>Opcion no valida .... escoja otra por favor</value>
     <comment>Literal opcion no valida</comment>
   </data>
-  <data name="salirapp" xml:space="preserve">
+  <data name="menuSalir" xml:space="preserve">
     <value>0- Salir aplicacion</value>
     <comment>Literal salir </comment>
+  </data>
+  <data name="menuConfig" xml:space="preserve">
+    <value>2- Configuracion</value>
+    <comment>Literal menu configuracion</comment>
+  </data>
+  <data name="Serializable" xml:space="preserve">
+    <value>Serializable</value>
+    <comment>Key app config formato file</comment>
   </data>
 </root>

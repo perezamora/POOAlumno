@@ -10,10 +10,10 @@ namespace POOAlumnos
 {
     public class FormatoTxt : Formato
     {
-        public override void AddElement(String path, Alumno alumno)
+        public override void Add(Alumno alumno)
         {
-            FileStream fs = CrearFileAppend(path);
-            EscribirFile(fs, alumno);
+            FileStream fs = Append(getPath());
+            Escribir(fs, alumno.ToString());
         }
     }
 }
