@@ -11,16 +11,15 @@ namespace POOAlumnos.Utilities
     public static class ConfigUtilities
     {
 
-         static ConfigUtilities()
+        static ConfigUtilities()
         {
             // Si no tenemos variables en el archivo APP.config la leemos por variables entorno
-            /*
             var EnvFormato = Environment.GetEnvironmentVariable("Formato");
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             Console.WriteLine(EnvFormato);
             config.AppSettings.Settings["serializable"].Value = EnvFormato;
             config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);*/
+            ConfigurationManager.RefreshSection(config.AppSettings.SectionInformation.Name);
         }
 
         // Obtenemos valor de la key configuracion

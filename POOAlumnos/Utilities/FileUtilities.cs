@@ -21,10 +21,9 @@ namespace POOAlumnos.Utilities
             // Nombre del fichero añadir elementos
             var nameFile = "file" + getValorConfig(Properties.Resources.Serializable);
             var filePath = Environment.GetEnvironmentVariable(nameFile);
+            var fullPath = path + "\\" + filePath;
             Console.WriteLine(nameFile);
             Console.WriteLine(filePath);
-
-            var fullPath = path + "\\" + filePath;
             Console.WriteLine("file path -->" + fullPath);
 
             return fullPath;
